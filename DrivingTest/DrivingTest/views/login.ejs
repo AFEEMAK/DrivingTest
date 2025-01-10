@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- header -->
+  <%- include('layouts/header'); -%>
+  <body>
+    <!-- Navigation-->
+    <%- include('layouts/navbar'); -%>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/journey.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>LOGIN</h1>
+              <span class="subheading">
+                Login to Ontario DriveTest Booking Kiosk
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <main class="mb-4">
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="my-3">
+              <form id="contactForm" action="/login" method="post">
+                <% if (messages.error) { %>
+                  <div class="alert alert-danger text-center" role="alert">
+                    <%= messages.error %>
+                  </div>
+                <% } %>
+                <h2 class="text-primary">Please Login Here</h2>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Enter your username..."
+                    data-sb-validations="required"
+                  />
+                  <label for="username">Username</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    User name is required.
+                  </div>
+                </div>
+                <div class="form-floating">
+                  <input
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Enter your password..."
+                    data-sb-validations="required"
+                  />
+                  <label for="password">Password</label>
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="name:required"
+                  >
+                    Password is required.
+                  </div>
+                </div>
+                <div>
+                  <% if (showMsgError === "userNotFound") { %>
+                  <p class="text-center">
+                    User not found!  Please
+                    <a href="/register" class="text-danger"> Register</a>
+                    your account
+                  </p>
+                  <% } else if (showMsgError === "pswdIncorrect") { %>
+                  <p class="text-center">
+                    Password is incorrect!  Please
+                    <a href="/register" class="text-danger"> Register</a>
+                    your account
+                  </p>
+                  <% } %>
+                </div>
+                <br />
+                <div class="form-group">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="sendMessageButton"
+                    name="login_form"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer-->
+    <%- include('layouts/footer'); -%>
+
+    <!-- scripts -->
+    <%- include('layouts/scripts'); -%>
+  </body>
+</html>

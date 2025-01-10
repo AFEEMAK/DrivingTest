@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- header -->
+  <%- include('layouts/header'); -%>
+
+  <body>
+    <!-- navigation -->
+    <%- include('layouts/navbar'); -%>
+
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/man.jpeg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>RESULTS</h1>
+              <span class="subheading">DriveTest Booking Kiosk</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mb-4">
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="themes">
+            <section class="py-1">
+              <div class="container my-3">
+                <div class="row justify-content-center">
+                  <div class="col-lg-12 mx-2">
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead class="table-primary">
+                          <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Test Type</th>
+                            <th>Test Status</th>
+                            <th>Comment</th>
+                            <th>
+                             License Number
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% DriverData.forEach(element => { %>
+                          <tr>
+                            <% if (element.firstname != "default") { %>
+                            <td class="text-capitalize">
+                              <%= element.firstname + " " + element.lastname %>
+                            </td>
+                            <% } else { %>
+                            <td class="text-capitalize">
+                              <%= element.username %>
+                            </td>
+                            <% } %>
+
+                            <td class="text-capitalize">
+                              <%= element.username %>
+                            </td>
+
+                            <td><%= element.TestType %></td>
+
+                            <% if (element.examStatus) { %>
+                              <td><span class="badge bg-success">PASS</span></td>
+                            <% } else if (element.comment == "") { %>
+                              <td>Not Updated</td>
+                            <% } else { %>
+                              <td><span class="badge bg-danger">FAIL</span></td>
+                            <% } %>
+                            <td><%= element.comment %></td>
+                          
+                          <td>
+                            <% if(element.license_no != ""){ %>
+                              <%= element.license_no %>
+
+                            <% }else{ %>
+                              
+                              <form action="/generateLicense" method="post">
+                              <input name="userId" type="hidden" value="<%= element._id %>">
+                              <button type="submit"  >Generate</button>
+                            </form>
+                              <% } %>
+                        </td>
+                          </tr>
+
+
+                          <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('layouts/footer'); -%>
+  </body>
+</html>

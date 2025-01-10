@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- header -->
+  <%- include('layouts/header'); -%>
+
+  <body>
+    <!-- navigation -->
+    <%- include('layouts/navbar'); -%>
+
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/man.jpeg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>MY RESULT</h1>
+              <span class="subheading">DriveTest Booking Kiosk</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mb-4">
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-lg-10">
+            <section class="py-2">
+              <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
+                    <form>
+                      <p class="text-primary">Test Report:</p>
+                      <div class="mb-3">
+                        <% if (DriverData.firstname == "") { %>
+                        <label for="name" class="form-label">Name</label>
+                        <input
+                          type="text"
+                          value='<%= DriverData.firstname + " " + DriverData.lastname %>'
+                          disabled
+                          class="form-control"
+                          id="name"
+                          name="name"
+                        />
+                        <% } else { %>
+                        <label for="username" class="form-label"
+                          >Username</label
+                        >
+                        <input
+                          type="text"
+                          value="<%= DriverData.username %>"
+                          disabled
+                          class="form-control"
+                          id="username"
+                          name="username"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="mb-3">
+                        <label for="TestType" class="form-label"
+                          >Test Type</label
+                        >
+                        <input
+                          type="text"
+                          value="<%= DriverData.TestType %>"
+                          disabled
+                          class="form-control"
+                          id="TestType"
+                          name="TestType"
+                        />
+                      </div>
+                      <% if (DriverData.TestType == "") { %>
+                      <div class="mb-3">
+                        <label for="appointmentStatus" class="form-label"
+                          >Appointment Status</label
+                        >
+                        <input
+                          type="text"
+                          value="Not Scheduled"
+                          disabled
+                          class="form-control"
+                          id="appointmentStatus"
+                          name="appointmentStatus"
+                        />
+                      </div>
+                      <% } %>
+                      <div class="mb-3">
+                        <% if (DriverData.TestType && DriverData.comment != "")
+                        { %> <% if (DriverData.examStatus) { %>
+                        <label for="status" class="form-label"
+                          >Test Result</label
+                        >
+                        <input
+                          type="text"
+                          value="pass"
+                          disabled
+                          class="form-control"
+                          id="status"
+                          name="status"
+                        />
+                        <% } else { %>
+                        <label for="status" class="form-label"
+                          >Test Result</label
+                        >
+                        <input
+                          type="text"
+                          value="fail"
+                          disabled
+                          class="form-control"
+                          id="status"
+                          name="status"
+                        />
+                        <% } %> <% } else { %>
+                        <label for="status" class="form-label"
+                          >Test Result</label
+                        >
+                        <input
+                          type="text"
+                          value="No Result"
+                          disabled
+                          class="form-control"
+                          id="status"
+                          name="status"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="mb-3">
+                        <label for="comment" class="form-label">Comments</label>
+                        <textarea
+                          id="comment"
+                          disabled
+                          class="form-control"
+                          name="comment"
+                        >
+                            <%= DriverData.comment %></textarea
+                        >
+                      </div>
+                      <div class="mb-3">
+                        <label for="comment" class="form-label">License Number</label>
+                        <textarea
+                          id="comment"
+                          disabled
+                          class="form-control"
+                          name="comment"
+                        >
+                            <%= DriverData.license_no ? DriverData.license_no : "Your licence number is yet to be released by the authorities" %></textarea
+                        >
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('layouts/footer'); -%>
+  </body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- header -->
+  <%- include('layouts/header'); -%>
+  <body>
+    <!-- Navigation-->
+    <%- include('layouts/navbar'); -%>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/light.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>G TEST</h1>
+              <span class="subheading">Ontario G Road Test</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mb-4">
+     
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+
+            <% if(user){%>
+              <% if((user.appointmentId && user.TestType=="G" ) && (user.license_no && user.license_no.startsWith('G2'))) {%>
+                <div>
+                  <p>Your Appointment is already booked for <%= dateSelected %> at <%= displayTime %>. See you at the examination centre.</p>
+                </div>
+              <% }else{ %>
+                <form method="post" action="/checkAppointmentG">
+                  <label for="date" class="col-sm-2 col-form-label text-secondary">
+                    <h5>Date</h5>
+                  </label>
+                  <div class="col-sm-10">
+  
+  
+                    <input type="date" id="date" value="<%= dateSelected %>" name="date"
+                      class="form-control mb-2" />
+                    <input type="submit" class="btn btn-primary" name="submit" id="submit" value="CHECK" />
+                  </div>
+                </form>
+              
+            
+             
+                <form method="post" action="/appointmentBooking">
+                  <label for="date" class="col-sm-2 col-form-label text-secondary">
+                    <h5>Time</h5>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="date" id="date" hidden value="<%= dateSelected %>" name="date"
+                      class="form-control mb-2" />
+                    <select  name="time" id="time" class="form-control mb-2">
+                      
+                 
+                      
+                      <option value="0">
+                        Click to select an available time:
+                      </option>
+                      <% displayTime.forEach(element=> { %>
+                        <option value="<%=element %>">
+                          <%=element %>
+                        </option>
+                        <% }); %>
+                    </select>
+                    <input type="submit" class="btn btn-primary" name="submit" value="BOOK" />
+                    <p class="text-danger">
+                     
+                    </p>
+                  </div>
+                  
+                </form>
+              <% } %>
+
+            </div>
+          </div>
+
+              <form method="POST" action="/updateCarDetails">
+                <p class="text-primary">My Details:</p>
+   
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="firstname" class="form-label">First Name:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstname"
+                      name="firstname"
+                      disabled
+                      value="<%= user.firstname %>"
+                    />
+                  </div>
+   
+                  <div class="col-md-6">
+                    <label for="lastname" class="form-label">Last Name:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lastname"
+                      name="lastname"
+                      disabled
+                      value="<%= user.lastname %>"
+                    />
+                  </div>
+                </div>
+   
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <label for="license_no" class="form-label"
+                      >Licence number:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="license_no"
+                      name="license_no"
+                      disabled
+                      value="<%= user.license_no %>"
+                    />
+                    <input
+                      type="hidden"
+                      name="license_no"
+                      value="<%= user.license_no %>"
+                    />
+                  </div>
+   
+                  <div class="col-md-6">
+                    <label for="age" class="form-label">Age:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="age"
+                      name="age"
+                      disabled
+                      value="<%= user.age %>"
+                    />
+                  </div>
+                </div>
+   
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="make" class="form-label">Make:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="make"
+                      name="car_details.make"
+                      value="<%= user.car_details.make %>"
+                    />
+                  </div>
+   
+                  <div class="col-md-6">
+                    <label for="model" class="form-label">Model:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="model"
+                      name="car_details.model"
+                      value="<%= user.car_details.model %>"
+                    />
+                  </div>
+                </div>
+   
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="year" class="form-label">Year:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="year"
+                      name="car_details.year"
+                      value="<%= user.car_details.year %>"
+                    />
+                  </div>
+   
+                  <div class="col-md-6">
+                    <label for="platno" class="form-label">Plate number:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="platno"
+                      name="car_details.platno"
+                      value="<%= user.car_details.platno %>"
+                    />
+                  </div>
+                </div>
+   
+                <div class="form-group">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="sendMessageButton"
+                  >
+                    Update
+                  </button>
+                </div>
+              </form>
+
+
+            <%}else{%>
+              
+              <p>Please get a G2 License from <a href="/g2">HERE</a></p>
+
+           <% }%>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer-->
+    <%- include('layouts/footer'); -%>
+
+    <!-- scripts -->
+    <%- include('layouts/scripts'); -%>
+  </body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- header -->
+<%- include('layouts/header'); -%>
+
+  <body>
+    <!-- Navigation-->
+    <%- include('layouts/navbar'); -%>
+
+      <!-- Page Header-->
+      <header class="masthead" style="background-image: url('assets/img/drive-test.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+              <div class="page-heading">
+                <h1>G2 TEST</h1>
+                <span class="subheading">Ontario G2 Road Test</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Main Content-->
+      <% if(gData.license_no && gData.license_no.startsWith('G2')){ %>
+        <p>G2 already Passed please go for gtest <a href="/g">here</a></p>
+          <%}else{ %>
+      <% if(current_appt){ %>
+      <main class="mb-4">
+        <div class="container px-4 px-lg-5">
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-10 col-xl-8" id="g2Form">
+              <p>Are You Ready For The G2 Road Test?</p>
+              <p>
+                The G2 road test is finished in around 20 minutes. It tests the
+                fundamental driving abilities you'll need for city driving and
+                you'll be able to drive on all major highways.
+              </p>
+
+              <div class="my-5">
+                <div class="row">
+                  <div class="col-md-6">
+                     
+                      <form method="post" action="/checkAppointment">
+                        <label for="date" class="col-sm-2 col-form-label text-secondary">
+                          <h5>Date</h5>
+                        </label>
+                        <div class="col-sm-10">
+  
+  
+                          <input type="date" id="date" value="<%=  current_appt.date %>" name="date"
+                            class="form-control mb-2" disabled />
+                        </div>
+                      </form>
+                    </div>
+  
+                    <div class="col-md-6">
+                      <form method="post" action="/appointmentBooking">
+                        <label for="date" class="col-sm-2 col-form-label text-secondary">
+                          <h5>Time</h5>
+                        </label>
+                        <div class="col-sm-10">
+                          <input type="text"  value="<%= current_appt.time  %>" name="date"
+                            class="form-control mb-2" disabled />
+                           
+                          <p class="text-danger">
+                            <%= showMessage %>
+                          </p>
+                        </div>
+                      </form>
+                      
+
+                    </div>
+                    <p>Your Appointment is already booked. See you on <%= current_appt.date %>, at <%= current_appt.time %> </p>
+                  </div>
+                </div>
+                <% if(gData.firstName != ""){
+                  %>
+                  
+                <div class="my-5">
+                  <form action="/saveUserDetails" method="post" id="contactForm">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p class="text-primary">Please fill your details below:</p>
+                        <div class="form-floating">
+                          <input class="form-control" id="firstname" value ="<%= gData.firstname %>" name="firstname" type="text"
+                            placeholder="Enter your first name..." data-sb-validations="required"  disabled/>
+                          <label for="firstname">First Name</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            A first name is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="lastname" value ="<%= gData.lastname%>" name="lastname" type="text"
+                            placeholder="Enter your last name..." data-sb-validations="required" disabled />
+                          <label for="lastname">Last Name</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            A last name is required.
+                          </div>
+                        </div>
+                        
+                        <div class="form-floating">
+                          <input class="form-control" id="age" value ="<%= gData.age%>" name="age" type="number" placeholder="Enter your age..."
+                            data-sb-validations="required" min="18" max="100" disabled/>
+                          <label for="age">Age</label>
+                          <div class="invalid-feedback" data-sb-feedback="phone:required">
+                            Age is required.
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6">
+                        <p class="text-primary">Please enter your car details:</p>
+                        <div class="form-floating">
+                          <input class="form-control" id="make" value ="<%= Cdata.make%>" name="make" type="text"
+                            placeholder="Enter your car make details..." data-sb-validations="required" />
+                          <label for="make">Make</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            Car make detail is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="model" value ="<%= Cdata.model%>" name="model" type="text"
+                            placeholder="Enter your car model number..." data-sb-validations="required" />
+                          <label for="model">Model</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            Car model is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="year" value ="<%= Cdata.year%>" name="year" type="number"
+                            placeholder="Enter your car year..." data-sb-validations="required" min="1900" max="2024" />
+                          <label for="year">Year</label>
+                          <div class="invalid-feedback" data-sb-feedback="email:required">
+                            car year is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="platno" value ="<%= Cdata.platno%>" name="platno" type="text"
+                            placeholder="Enter your car plate number..." data-sb-validations="required" />
+                          <label for="platno">Plate Number</label>
+                          <div class="invalid-feedback" data-sb-feedback="phone:required">
+                            A plate number is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <br />
+  
+                    <div class="d-none" id="submitSuccessMessage">
+                      <div class="text-center mb-3">
+                        <div class="fw-bolder">Form submission successful!</div>
+                        <br />
+                      </div>
+                    </div>
+              
+                    <!-- Submit Button -->
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary" id="sendMessageButton">
+                        SAVE
+                      </button>
+                    </div>
+                  </form>
+                  </div>
+                    <% }else{ %> 
+
+
+                      <div class="col-md-10 col-lg-10 col-xl-8" id="g2Form">
+                        <div class="my-5">
+                          <div class="row">
+                            <div class="col-md-6">
+
+                              <% if (flash.error) { %>
+                                <div class="alert alert-danger" role="alert">
+                                  <%= flash.error %>
+                                </div>
+                              <% } %>
+                  <form action="/saveNewUserDetails" method="post" id="contactForm">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p class="text-primary">Please fill your details below:</p>
+                        <div class="form-floating">
+                          <input class="form-control" id="firstname"  name="firstname" type="text"
+                            placeholder="Enter your first name..." data-sb-validations="required" />
+                          <label for="firstname">First Name</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            A first name is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="lastname" name="lastname" type="text"
+                            placeholder="Enter your last name..." data-sb-validations="required" />
+                          <label for="lastname">Last Name</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            A last name is required.
+                          </div>
+                        </div>
+                        
+                        <div class="form-floating">
+                          <input class="form-control" id="age"  name="age" type="number" placeholder="Enter your age..."
+                            data-sb-validations="required" min="18" max="100" />
+                          <label for="age">Age</label>
+                          <div class="invalid-feedback" data-sb-feedback="phone:required">
+                            Age is required.
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6">
+                        <p class="text-primary">Please enter your car details:</p>
+                        <div class="form-floating">
+                          <input class="form-control" id="make" name="make" type="text"
+                            placeholder="Enter your car make details..." data-sb-validations="required" />
+                          <label for="make">Make</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            Car make detail is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="model"  name="model" type="text"
+                            placeholder="Enter your car model number..." data-sb-validations="required" />
+                          <label for="model">Model</label>
+                          <div class="invalid-feedback" data-sb-feedback="name:required">
+                            Car model is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="year"  name="year" type="number"
+                            placeholder="Enter your car year..." data-sb-validations="required" min="1900" max="2024" />
+                          <label for="year">Year</label>
+                          <div class="invalid-feedback" data-sb-feedback="email:required">
+                            car year is required.
+                          </div>
+                        </div>
+                        <div class="form-floating">
+                          <input class="form-control" id="platno"  name="platno" type="text"
+                            placeholder="Enter your car plate number..." data-sb-validations="required" />
+                          <label for="platno">Plate Number</label>
+                          <div class="invalid-feedback" data-sb-feedback="phone:required">
+                            A plate number is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      </div>
+                    </div>
+  
+                    <br />
+  
+                    <div class="d-none" id="submitSuccessMessage">
+                      <div class="text-center mb-3">
+                        <div class="fw-bolder">Form submission successful!</div>
+                        <br />
+                      </div>
+                    </div>
+  
+                    <!-- Submit Button -->
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary" id="sendMessageButton">
+                        SAVE
+                      </button>
+                    </div>
+                  </form>
+                            </div>
+                            
+                  <% } %>
+
+                <% }else{  %>
+           
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                      <div class="col-md-10 col-lg-10 col-xl-8" id="g2Form">
+                  <form method="post" action="/checkAppointment">
+                    <label for="date" class="col-sm-2 col-form-label text-secondary">
+                      <h5>Date</h5>
+                    </label>
+                    <div class="col-sm-10">
+
+
+                      <input type="date" id="date" value="<%= dateSelected %>" name="date"
+                        class="form-control mb-2" />
+                      <input type="submit" class="btn btn-primary" name="submit" id="submit" value="CHECK" />
+                    </div>
+                  </form>
+                </div>
+              
+                <div class="col-md-6">
+                  <form method="post" action="/appointmentBooking">
+                    <label for="date" class="col-sm-2 col-form-label text-secondary">
+                      <h5>Time</h5>
+                    </label>
+                    <div class="col-sm-10">
+                      <input type="date" id="date" hidden value="<%= dateSelected %>" name="date"
+                        class="form-control mb-2" />
+                      <select  name="time" id="time" class="form-control mb-2">
+                        
+                   
+                        
+                        <option value="0">
+                          Click to select an available time:
+                        </option>
+                        <% displayTime.forEach(element=> { %>
+                          <option value="<%=element %>">
+                            <%=element %>
+                          </option>
+                          <% }); %>
+                      </select>
+                      <input type="submit" class="btn btn-primary" name="submit" value="BOOK" />
+                      <p class="text-danger">
+                        <%= showMessage %>
+                      </p>
+                    </div>
+                    </div>
+                    
+                  </form>
+            
+              </div>
+            </div>
+            <% if(gData.firstName != ""){
+              %>
+ 
+            
+
+              <div class="col-md-10 col-lg-10 col-xl-8" id="g2Form">
+                <div class="my-5">
+                  <div class="row">
+                    <div class="col-md-6">
+              <form action="/saveUserDetails" method="post" id="contactForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="text-primary">Please fill your details below:</p>
+                    <div class="form-floating">
+                      <input class="form-control" id="firstname" value ="<%= gData.firstname %>" name="firstname" type="text"
+                        placeholder="Enter your first name..." data-sb-validations="required"  disabled/>
+                      <label for="firstname">First Name</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        A first name is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="lastname" value ="<%= gData.lastname%>" name="lastname" type="text"
+                        placeholder="Enter your last name..." data-sb-validations="required" disabled />
+                      <label for="lastname">Last Name</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        A last name is required.
+                      </div>
+                    </div>
+                    
+                    <div class="form-floating">
+                      <input class="form-control" id="age" value ="<%= gData.age%>" name="age" type="number" placeholder="Enter your age..."
+                        data-sb-validations="required" min="18" max="100" disabled/>
+                      <label for="age">Age</label>
+                      <div class="invalid-feedback" data-sb-feedback="phone:required">
+                        Age is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <p class="text-primary">Please enter your car details:</p>
+                    <div class="form-floating">
+                      <input class="form-control" id="make" value ="<%= Cdata.make%>" name="make" type="text"
+                        placeholder="Enter your car make details..." data-sb-validations="required" />
+                      <label for="make">Make</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        Car make detail is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="model" value ="<%= Cdata.model%>" name="model" type="text"
+                        placeholder="Enter your car model number..." data-sb-validations="required" />
+                      <label for="model">Model</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        Car model is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="year" value ="<%= Cdata.year%>" name="year" type="number"
+                        placeholder="Enter your car year..." data-sb-validations="required" min="1900" max="2024" />
+                      <label for="year">Year</label>
+                      <div class="invalid-feedback" data-sb-feedback="email:required">
+                        car year is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="platno" value ="<%= Cdata.platno%>" name="platno" type="text"
+                        placeholder="Enter your car plate number..." data-sb-validations="required" />
+                      <label for="platno">Plate Number</label>
+                      <div class="invalid-feedback" data-sb-feedback="phone:required">
+                        A plate number is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+                <br />
+
+                <div class="d-none" id="submitSuccessMessage">
+                  <div class="text-center mb-3">
+                    <div class="fw-bolder">Form submission successful!</div>
+                    <br />
+                  </div>
+                </div>
+                </div>
+          
+                <!-- Submit Button -->
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="sendMessageButton">
+                    SAVE
+                  </button>
+                </div>
+              </form>
+              </div>
+
+                <% }else{ %> 
+
+               
+                  <!-- <div class="container px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center"> -->
+                      <div class="col-md-10 col-lg-10 col-xl-8" id="g2Form">
+          
+            <div class="my-5">
+              <form action="/saveNewUserDetails" method="post" id="contactForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="text-primary">Please fill your details below:</p>
+                    <div class="form-floating">
+                      <input class="form-control" id="firstname"  name="firstname" type="text"
+                        placeholder="Enter your first name..." data-sb-validations="required" />
+                      <label for="firstname">First Name</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        A first name is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="lastname" name="lastname" type="text"
+                        placeholder="Enter your last name..." data-sb-validations="required" />
+                      <label for="lastname">Last Name</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        A last name is required.
+                      </div>
+                    </div>
+                    
+                    <div class="form-floating">
+                      <input class="form-control" id="age"  name="age" type="number" placeholder="Enter your age..."
+                        data-sb-validations="required" min="18" max="100" />
+                      <label for="age">Age</label>
+                      <div class="invalid-feedback" data-sb-feedback="phone:required">
+                        Age is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <p class="text-primary">Please enter your car details:</p>
+                    <div class="form-floating">
+                      <input class="form-control" id="make" name="make" type="text"
+                        placeholder="Enter your car make details..." data-sb-validations="required" />
+                      <label for="make">Make</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        Car make detail is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="model"  name="model" type="text"
+                        placeholder="Enter your car model number..." data-sb-validations="required" />
+                      <label for="model">Model</label>
+                      <div class="invalid-feedback" data-sb-feedback="name:required">
+                        Car model is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="year"  name="year" type="number"
+                        placeholder="Enter your car year..." data-sb-validations="required" min="1900" max="2024" />
+                      <label for="year">Year</label>
+                      <div class="invalid-feedback" data-sb-feedback="email:required">
+                        car year is required.
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input class="form-control" id="platno"  name="platno" type="text"
+                        placeholder="Enter your car plate number..." data-sb-validations="required" />
+                      <label for="platno">Plate Number</label>
+                      <div class="invalid-feedback" data-sb-feedback="phone:required">
+                        A plate number is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                </div>
+
+                <br />
+
+                <div class="d-none" id="submitSuccessMessage">
+                  <div class="text-center mb-3">
+                    <div class="fw-bolder">Form submission successful!</div>
+                    <br />
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="sendMessageButton">
+                    SAVE
+                  </button>
+                </div>
+              </form>
+              <% } %>
+
+                                  <% } %>
+                  <% } %>
+                 
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer-->
+      <%- include('layouts/footer'); -%>
+
+        <!-- scripts -->
+        <%- include('layouts/scripts'); -%>
+          <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+          <!-- * *                               SB Forms JS                               * *-->
+          <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+          <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+          <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+  </body>
+
+</html>

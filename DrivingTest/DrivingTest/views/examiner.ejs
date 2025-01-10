@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- header -->
+  <%- include('layouts/header'); -%>
+
+  <body>
+    <!-- navigation -->
+    <%- include('layouts/navbar'); -%>
+
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/man.jpeg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>EXAMINER</h1>
+              <span class="subheading">Candidates Report</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mb-4">
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-lg-12">
+            <form method="POST" action="/candidatesList" class="col-lg-4">
+              <section>
+                <div class="mb-3">
+                  <label for="TestType" class="form-label text-secondary"
+                    >Select Test Type:</label
+                  >
+                  <select class="form-select" id="TestType" name="TestType">
+                    <% if(TestType == "All") { %>
+                    <option selected value="All">All</option>
+                    <option value="G2">G2 Test</option>
+                    <option value="G">G Test</option>
+                    <% } else if(TestType == "G2") { %>
+                    <option value="All">All</option>
+                    <option selected value="G2">G2 Test</option>
+                    <option value="G">G Test</option>
+                    <% } else if(TestType == "G") { %>
+                    <option value="All">All</option>
+                    <option value="G2">G2 Test</option>
+                    <option selected value="G">G Test</option>
+                    <% } %>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Check</button>
+              </section>
+            </form>
+
+            <div class="table-responsive my-5">
+              <label for="TestType" class="form-label text-secondary my-"
+                    >Please update the drivers result here:</label
+                  > 
+              <table class="table table-striped mt-2">
+                <thead class="table-primary">
+                  <tr>
+                    <th>Driver Name</th>
+                    <th>Vehicle Make</th>
+                    <th>Vehicle Model</th>
+                    <th>Test Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% DriverData.forEach(element => { %>
+                  <tr>
+                    <td><%= element.firstname + " " + element.lastname %></td>
+                    <td><%= element.car_details.make %></td>
+                    <td><%= element.car_details.model %></td>
+                    <td><%= element.TestType %></td>
+                    <td>
+                      <form method="POST" action="/examinerReview">
+                        <input type="hidden" name="driverId" value="<%= element._id %>">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('layouts/footer'); -%>
+  </body>
+</html>

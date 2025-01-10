@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- header -->
+  <%- include('layouts/header'); -%>
+  <body>
+    <!-- Navigation-->
+    <%- include('layouts/navbar'); -%>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('/assets/img/journey.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>REVIEW</h1>
+              <span class="subheading">
+                Login to Ontario DriveTest Booking Kiosk
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <main class="mb-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="my-3">
+              <form method="post" action="/updateTestResult">
+                <section>
+                  <div>
+                    <h3 class="mb-4 text-primary">Please update 
+                      <span class="text-capitalize"><%= DriverData.firstname %></span>'s Test report:</h3>
+                    <input
+                      type="text"
+                      value="<%= DriverData._id %>"
+                      hidden
+                      id="userId"
+                      name="userId"
+                    />
+
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Driver's name</label>
+                      <input
+                        type="text"
+                        value='<%= DriverData.firstname + " " + DriverData.lastname %>'
+                        disabled
+                        class="form-control"
+                        id="name"
+                        name="name"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="TestType" class="form-label">Test Type</label>
+                      <input
+                        type="text"
+                        value="<%= DriverData.TestType %>"
+                        disabled
+                        class="form-control"
+                        id="TestType"
+                        name="TestType"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="status" class="form-label">Test Status</label>
+                      <select id="status" name="status" class="form-select">
+                        <% if(DriverData.examStatus) { %>
+                        <option selected value="pass">PASS</option>
+                        <option value="fail">FAIL</option>
+                        <% } else { %>
+                        <option value="pass">PASS</option>
+                        <option selected value="fail">FAIL</option>
+                        <% } %>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="comment" class="form-label">Comments</label>
+                      <textarea
+                        rows="3"
+                        id="comment"
+                        required
+                        name="comment"
+                        class="form-control text-start"
+                      >
+                      <%= DriverData.comment %></textarea
+                      >
+                    </div>
+
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      name="submit"
+                      id="submit"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </section>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer-->
+    <%- include('layouts/footer'); -%>
+
+    <!-- scripts -->
+    <%- include('layouts/scripts'); -%>
+  </body>
+</html>
