@@ -40,9 +40,7 @@
                             <th>Test Type</th>
                             <th>Test Status</th>
                             <th>Comment</th>
-                            <th>
-                             License Number
-                            </th>
+                            <th>License Number</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -73,21 +71,21 @@
                             <% } %>
                             <td><%= element.comment %></td>
                           
-                          <td>
-                            <% if(element.license_no != ""){ %>
-                              <%= element.license_no %>
-
-                            <% }else{ %>
-                              
-                              <form action="/generateLicense" method="post">
-                              <input name="userId" type="hidden" value="<%= element._id %>">
-                              <button type="submit"  >Generate</button>
-                            </form>
+                            <td>
+                              <% 
+                                let licensePrefix = element.license_no.split('-')[0]; // Extract the part before the hyphen
+                                if ((element.TestType === 'G' && licensePrefix === 'G') || 
+                                     (element.TestType === 'G2' && licensePrefix === 'G2')) { 
+                              %>
+                                <%= element.license_no %>
+                              <% } else { %>
+                                <form action="/generateLicense" method="post">
+                                  <input name="userId" type="hidden" value="<%= element._id %>">
+                                  <button type="submit">Generate</button>
+                                </form>
                               <% } %>
-                        </td>
+                            </td>
                           </tr>
-
-
                           <% }); %>
                         </tbody>
                       </table>

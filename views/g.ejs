@@ -30,6 +30,11 @@
           <div class="col-md-10 col-lg-8 col-xl-7">
 
             <% if(user){%>
+              <% if(user.license_no.startsWith('G')){ %>
+                <div>
+                  <p>You have Passed Your Test See The Results Tab</p>
+                </div>
+              <% }%>
               <% if((user.appointmentId && user.TestType=="G" ) && (user.license_no && user.license_no.startsWith('G2'))) {%>
                 <div>
                   <p>Your Appointment is already booked for <%= dateSelected %> at <%= displayTime %>. See you at the examination centre.</p>
@@ -204,9 +209,10 @@
               </form>
 
 
-            <%}else{%>
-              
-              <p>Please get a G2 License from <a href="/g2">HERE</a></p>
+            <% }else{%>
+              <p>Cant take the test Now Either You Have Passed The Test Already and you can get your license no from <a href="/testResult">HERE</a> </p>
+              <p>Or</p>
+              <p>Please get a G2 License First from <a href="/g2">HERE</a></p>
 
            <% }%>
 

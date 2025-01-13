@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     if (!req.body.firstname || !req.body.lastname || !req.body.age || !req.body.make || !req.body.model || !req.body.year || !req.body.platno) {
         console.log(req.body.firstname + "on save userdetail page");
         req.flash('error', 'All fields are required.');
-        return res.redirect('/g2'); 
+        return res.redirect('g2'); 
       }
   try {
 
@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
     // req.session.fname = updatedUser.firstname;
   } catch (error) {
     console.error(error);
-    res.redirect("/g2"); // Redirect to g2 page if an error occurs
+    res.redirect("g2"); // Redirect to g2 page if an error occurs
   }
 };
      

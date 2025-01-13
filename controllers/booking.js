@@ -1,5 +1,5 @@
-const Appointment = require("../models/UserAppointment.js");
-const User = require("../models/User.js");
+const User = require("../models/User");
+const Appointment = require("../models/UserAppointment");
 
 module.exports = async (req, res) => {
   var date = req.body.date;
@@ -32,7 +32,10 @@ module.exports = async (req, res) => {
     availableTimeSlots.push(availableAppointments.time);
   }
 
-  
+  // Fetch current appointment if available
+  const current_appt = await Appointment.findOne({
+    userId: userId, // Assuming the appointment is associated with the user
+  });
 
   if (!time) {
     const err = "This date is not available. Please select next available date";
@@ -42,6 +45,7 @@ module.exports = async (req, res) => {
       dateSelected: dateSelected,
       displayTime: availableTimeSlots,
       showMessage: err,
+      current_appt: current_appt, // Pass current_appt to the view
     });
   } else if (!g2UserDetails) {
     g2UserDetails = {
@@ -64,6 +68,7 @@ module.exports = async (req, res) => {
       dateSelected: dateSelected,
       displayTime: availableTimeSlots,
       showMessage: err,
+      current_appt: current_appt, // Pass current_appt to the view
     });
   } else {
     const err = `Appointment has been confirmed. See you on "${dateSelected}" at "${availableTimeSlots}".`;
@@ -71,12 +76,10 @@ module.exports = async (req, res) => {
       { _id: availableAppointments._id },
       { isTimeSlotAvailable: false }
     );
-    if (g2UserDetails.license_no && g2UserDetails.license_no.startsWith('G2')) {
+    if (g2UserDetails.license_no && g2UserDetails.license_no.startsWith("G2")) {
       await User.findOneAndUpdate(
         { _id: userId },
-        { appointmentId: availableAppointments._id ,
-         TestType: "G"}
-          
+        { appointmentId: availableAppointments._id, TestType: "G" }
       );
       res.redirect("/");
     }
@@ -85,13 +88,13 @@ module.exports = async (req, res) => {
       { appointmentId: availableAppointments._id }
     );
 
-    
     res.render("g2", {
       gData: g2UserDetails,
       Cdata: g2UserDetails.car_details,
       dateSelected: dateSelected,
       displayTime: availableTimeSlots,
       showMessage: err,
+      current_appt: current_appt, // Pass current_appt to the view
     });
   }
 };

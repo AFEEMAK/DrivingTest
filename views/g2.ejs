@@ -21,9 +21,10 @@
         </div>
       </header>
       <!-- Main Content-->
-      <% if(gData.license_no && gData.license_no.startsWith('G2')){ %>
+      <% if(gData.license_no && (gData.license_no.startsWith('G2') || gData.license_no.startsWith('G'))){ %>
         <p>G2 already Passed please go for gtest <a href="/g">here</a></p>
           <%}else{ %>
+            
       <% if(current_appt){ %>
       <main class="mb-4">
         <div class="container px-4 px-lg-5">
@@ -59,7 +60,7 @@
                           <h5>Time</h5>
                         </label>
                         <div class="col-sm-10">
-                          <input type="text"  value="<%= current_appt.time  %>" name="date"
+                          <input type="text"  value="<%= current_appt.time ? current_appt.time : 'No Appointment'  %>" name="date"
                             class="form-control mb-2" disabled />
                            
                           <p class="text-danger">
@@ -273,22 +274,20 @@
                     <label for="date" class="col-sm-2 col-form-label text-secondary">
                       <h5>Date</h5>
                     </label>
-                    <div class="col-sm-10">
+                    
 
 
                       <input type="date" id="date" value="<%= dateSelected %>" name="date"
                         class="form-control mb-2" />
                       <input type="submit" class="btn btn-primary" name="submit" id="submit" value="CHECK" />
-                    </div>
+                    
                   </form>
-                </div>
-              
-                <div class="col-md-6">
+             
                   <form method="post" action="/appointmentBooking">
                     <label for="date" class="col-sm-2 col-form-label text-secondary">
                       <h5>Time</h5>
                     </label>
-                    <div class="col-sm-10">
+                    <div class="my-1">
                       <input type="date" id="date" hidden value="<%= dateSelected %>" name="date"
                         class="form-control mb-2" />
                       <select  name="time" id="time" class="form-control mb-2">
@@ -314,18 +313,18 @@
                   </form>
             
               </div>
-            </div>
+           
             <% if(gData.firstName != ""){
               %>
  
             
 
-              <div class="col-md-10 col-lg-10 col-xl-8" id="g2Form">
+              
                 <div class="my-5">
-                  <div class="row">
-                    <div class="col-md-6">
+                 
+                    
               <form action="/saveUserDetails" method="post" id="contactForm">
-                <div class="row">
+                <div class="row gx-4 gx-lg-5 p-5 m-5 justify-content-center">
                   <div class="col-md-6">
                     <p class="text-primary">Please fill your details below:</p>
                     <div class="form-floating">
@@ -391,8 +390,8 @@
                     </div>
                   </div>
                 </div>
-                  </div>
-                </div>
+                 
+               
               </div>
             </div>
                 <br />
@@ -406,7 +405,7 @@
                 </div>
           
                 <!-- Submit Button -->
-                <div class="form-group">
+                <div class="form-group mx-5  px-5">
                   <button type="submit" class="btn btn-primary" id="sendMessageButton">
                     SAVE
                   </button>

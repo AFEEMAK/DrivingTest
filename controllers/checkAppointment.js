@@ -3,20 +3,26 @@ const User = require("../models/User.js");
 
 module.exports = async (req, res) => {
   var userId = req.session.userId;
+
+  // Find user details
   const g2UserDetails = await User.findOne({ _id: userId });
-  
-  // getting all time slots available for the selected day
+
+  // Find the user's current appointment
+  const currentAppt = await Appointment.findOne({ userId: userId, date: req.body.date });
+
+  // Getting all time slots available for the selected day
   var dateSelected = req.body.date;
   const availableAppointments = await Appointment.find({
     date: dateSelected,
     isTimeSlotAvailable: true,
   });
+
   var availableTimeSlots = [];
   availableAppointments.forEach((element) => {
     availableTimeSlots.push(element.time);
   });
 
-  
+  // If no user details are found
   if (!g2UserDetails) {
     const g2UserDetails = {
       firstName: "",
@@ -37,6 +43,7 @@ module.exports = async (req, res) => {
       dateSelected: dateSelected,
       displayTime: availableTimeSlots,
       showMessage: "",
+      current_appt: currentAppt || null,  // Pass the current appointment
     });
   } else {
     res.render("g2", {
@@ -45,7 +52,7 @@ module.exports = async (req, res) => {
       dateSelected: dateSelected,
       displayTime: availableTimeSlots,
       showMessage: "",
+      current_appt: currentAppt || null,  // Pass the current appointment
     });
   }
 };
- 
