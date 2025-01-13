@@ -9,7 +9,7 @@ const flash = require("express-flash");
 // DB connection
 mongoose
   .connect(
-    "mongodb+srv://afeemaknojia:Amaksnapcap%40201520@cluster0.a97zgpt.mongodb.net/",
+    "",
     { useNewUrlParser: true }
   )
   .then(() => {
